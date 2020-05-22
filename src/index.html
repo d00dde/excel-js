@@ -14,7 +14,7 @@
     <div id="app" class="container">
       <div class="excel">
         <div class="excel__header">
-          <input type="text" class="table-name-input" value="Новая таблица" />
+          <input type="text" class="table-name-input" placeholder="Введите название..." />
           <div class="table-controls">
             <div class="button">
               <span class="material-icons">
@@ -28,8 +28,43 @@
             </div>
           </div>
         </div>
-        <div class="excel__toolbar"></div>
-        <div class="excel__formula"></div>
+        <div class="excel__toolbar">
+          <div class="button">
+            <span class="material-icons">
+              format_bold
+            </span>
+          </div>
+          <div class="button">
+            <span class="material-icons">
+              format_italic
+            </span>
+          </div>
+          <div class="button">
+            <span class="material-icons">
+              format_underline
+            </span>
+          </div>
+          <div class="button">
+            <span class="material-icons">
+              format_align_left
+            </span>
+          </div>
+          <div class="button">
+            <span class="material-icons">
+              format_align_center
+            </span>
+          </div>
+          <div class="button">
+            <span class="material-icons">
+              format_align_right
+            </span>
+          </div>
+
+        </div>
+        <div class="excel__formula">
+          <div class="title">f(x)</div>
+          <div class="formula-input" contenteditable spellcheck="false"></div>
+        </div>
         <div class="excel__table"></div>
       </div>
     </div>
