@@ -4,6 +4,9 @@
   padding: 3px;
   text-align: center;
   color: rgba(0, 0, 0, 0.7);
+  -moz-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none; 
   span {
     font-size: 18px;
   }
@@ -15,4 +18,9 @@
     background-color: #eee;
     cursor: pointer;
   }
+}
+@mixin clear-list () {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
