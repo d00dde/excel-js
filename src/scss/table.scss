@@ -15,6 +15,8 @@
     height: $row-height;
   }
   .row-info {
+    @include noSelect;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,7 +30,9 @@
     display: flex;
   }
   .column {
+    @include noSelect;
     display: flex;
+    position: relative;
     justify-content: center;
     align-items: center;
     background-color: #f8f9fa;
@@ -55,7 +59,32 @@
   }
   .selected {
     border: none;
-    outline: 2px solid #3c74ff;
+    outline: 2px solid $primary-color;
     z-index: 2;
+  }
+  .col-resize,
+  .row-resize {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: $primary-color;
+    opacity: 1;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .col-resize {
+    top: 0;
+    width: 4px;
+    &:hover {
+      cursor: col-resize;
+    }
+  }
+  .row-resize {
+    left: 0;
+    height: 4px;
+    &:hover {
+      cursor: row-resize;
+    }
   }
 }

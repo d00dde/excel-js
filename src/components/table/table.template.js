@@ -6,26 +6,19 @@ const CODES = {
   },
 };
 
-/* function createRow(rowInfo, isFirst) {
-  let row = `
-  <div class="row">
-    <div class="row-info">${rowInfo}</div>
-    <div class="row-data">
-  `;
-  for (let i = 0; i <= CODES.colsCount(); i++) {
-    row += isFirst
-      ? `<div class="column"> ${String.fromCharCode(CODES.A + i)}</div>`
-      : `<div class="cell" contenteditable></div>`;
-  }
-  row += "</div></div>";
-  return row;
-} */
-
-function createRow(rowInfo, content) {
+function createRow(index, content) {
+  const resize = index
+    ? '<div class="row-resize" data-resize="row"></div>'
+    : '';
   return `
     <div class="row">
-      <div class="row-info">${rowInfo}</div>
-      <div class="row-data">${content}</div>
+      <div class="row-info">
+        ${index ? index : ''}
+        ${resize}
+      </div>
+      <div class="row-data">
+        ${content}
+      </div>
     </div>
     `;
 }
@@ -35,10 +28,22 @@ function getColTitle(_, index) {
 }
 
 function createColumn(title) {
-  return `<div class="column">${title}</div>`;
+  return `
+  <div class="column">
+    ${title}
+    <div class="col-resize" data-resize="column"></div>
+  </div>
+  `;
 }
-function createCell() {
-  return `<div class="cell" contenteditable></div>`;
+function createCell(el, index) {
+  return `
+    <div
+      class="cell"
+      contenteditable
+      data-column=${el}
+      data-row=${index + 1}
+    >
+    </div>`;
 }
 
 export function createTable(rowsCount = 15) {
@@ -48,11 +53,12 @@ export function createTable(rowsCount = 15) {
     .map(getColTitle)
     .map(createColumn)
     .join('');
-  rows.push(createRow('', columns));
+  rows.push(createRow(null, columns));
   for (let i = 0; i < rowsCount; i++) {
     const cells = new Array(CODES.colsCount)
       .fill('')
-      .map(createCell)
+      .map(getColTitle)
+      .map((el) => createCell(el, i))
       .join('');
     rows.push(createRow(i + 1, cells));
   }

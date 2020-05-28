@@ -1,12 +1,11 @@
 @mixin button($color: green) {
+  @include noSelect;
   height: 24px;
   min-width: 24px;
   padding: 3px;
   text-align: center;
   color: rgba(0, 0, 0, 0.7);
-  -moz-user-select: none;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none; 
+
   span {
     font-size: 18px;
   }
@@ -19,8 +18,13 @@
     cursor: pointer;
   }
 }
-@mixin clear-list () {
+@mixin clear-list() {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+@mixin noSelect() {
+  -moz-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
