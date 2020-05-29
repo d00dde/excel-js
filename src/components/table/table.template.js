@@ -46,6 +46,13 @@ function createCell(el, index) {
     </div>`;
 }
 
+function createIndicators() {
+  return `
+    <div class="indicator-col"></div>
+    <div class="indicator-row"></div>
+  `;
+}
+
 export function createTable(rowsCount = 15) {
   const rows = [];
   const columns = new Array(CODES.colsCount)
@@ -62,5 +69,6 @@ export function createTable(rowsCount = 15) {
       .join('');
     rows.push(createRow(i + 1, cells));
   }
+  rows.push(createIndicators());
   return rows.join('');
 }
