@@ -26,7 +26,7 @@ export class DOMListener {
       this.$root.off(listener, this[method]);
     });
   }
-  addListener(type) {
+/*  addListener(type) {
     const method = createMethodName(type);
     this[method] = this[method].bind(this);
     this.$root.on(type, this[method]);
@@ -34,7 +34,7 @@ export class DOMListener {
   removeListener(type) {
     const method = createMethodName(type);
     this.$root.off(type, this[method]);
-  }
+  } */
 }
 
 function createMethodName(eventName) {

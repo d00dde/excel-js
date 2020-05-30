@@ -6,14 +6,14 @@ const CODES = {
   },
 };
 
-function createRow(index, content) {
-  const resize = index
+function createRow(row, content) {
+  const resize = row !== null
     ? '<div class="row-resize" data-resize="row"></div>'
     : '';
   return `
-    <div class="row">
+    <div class="row" data-row=${row}>
       <div class="row-info">
-        ${index ? index : ''}
+        ${row !== null ? row + 1 : ''}
         ${resize}
       </div>
       <div class="row-data">
@@ -27,21 +27,21 @@ function getColTitle(_, index) {
   return String.fromCharCode(CODES.A + index);
 }
 
-function createColumn(title) {
+function createColumn(title, index) {
   return `
-  <div class="column">
+  <div class="column" data-type="resizable" data-col=${index}>
     ${title}
     <div class="col-resize" data-resize="column"></div>
   </div>
   `;
 }
-function createCell(el, index) {
+function createCell(col, row) {
   return `
     <div
       class="cell"
       contenteditable
-      data-column=${el}
-      data-row=${index + 1}
+      data-col=${col}
+      data-row=${row}
     >
     </div>`;
 }
@@ -64,10 +64,9 @@ export function createTable(rowsCount = 15) {
   for (let i = 0; i < rowsCount; i++) {
     const cells = new Array(CODES.colsCount)
       .fill('')
-      .map(getColTitle)
-      .map((el) => createCell(el, i))
+      .map((_, col) => createCell(col, i))
       .join('');
-    rows.push(createRow(i + 1, cells));
+    rows.push(createRow(i, cells));
   }
   rows.push(createIndicators());
   return rows.join('');
