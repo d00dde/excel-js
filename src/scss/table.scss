@@ -70,6 +70,7 @@
     right: 0;
     background-color: $primary-color;
     opacity: 0;
+    z-index: 10;
     &:hover {
       opacity: 1;
     }
@@ -88,7 +89,8 @@
       cursor: row-resize;
     }
   }
-  .indicator-col, .indicator-row{
+  .indicator-col,
+  .indicator-row {
     position: absolute;
     background-color: $primary-color;
   }

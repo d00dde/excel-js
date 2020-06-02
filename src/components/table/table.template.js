@@ -7,11 +7,10 @@ const CODES = {
 };
 
 function createRow(row, content) {
-  const resize = row !== null
-    ? '<div class="row-resize" data-resize="row"></div>'
-    : '';
+  const resize =
+    row !== null ? '<div class="row-resize" data-resize="row"></div>' : '';
   return `
-    <div class="row" data-row=${row}>
+    <div class="row" data-row=${row} data-type="resizable">
       <div class="row-info">
         ${row !== null ? row + 1 : ''}
         ${resize}

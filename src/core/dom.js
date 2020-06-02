@@ -45,6 +45,12 @@ class Dom {
   get data() {
     return this.$el.dataset;
   }
+  css(styles = {}) {
+    Object.keys(styles).forEach((key) => {
+      this.$el.style[key] = styles[key];
+    });
+    return this;
+  }
 }
 
 export function $(selector) {
