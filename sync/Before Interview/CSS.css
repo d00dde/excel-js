@@ -1,0 +1,10 @@
+/*########   BACKGROUND   #########*/
+.bg {
+  background-color: color;
+  background-image: url(""); /*можно указать несколько фонов через запятую, первый - ближний*/
+  background-size: 50% auto | 12px | cover | 3em; /*Для нескольких фонов задаётся через запятую*/
+  background-origin: border-box | padding-box | content-box; /*под чем фон*/
+  background-repeat: no-repeat | repeat-x | space repeat; /*можно указать по горионтали и вертикали*/
+  background-attachment: fixed | local | scroll; /*определяет, является ли позиция этого изображения фиксированной в области просмотра, или прокручивается вместе с содержащим его блоком.*/
+  background-clip: border-box | text; /*определяет как цвет фона или фоновое изображение будут выводиться под границами блока.*/
+}

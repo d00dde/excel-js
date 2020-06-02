@@ -6,26 +6,18 @@ const CODES = {
   },
 };
 
-/* function createRow(rowInfo, isFirst) {
-  let row = `
-  <div class="row">
-    <div class="row-info">${rowInfo}</div>
-    <div class="row-data">
-  `;
-  for (let i = 0; i <= CODES.colsCount(); i++) {
-    row += isFirst
-      ? `<div class="column"> ${String.fromCharCode(CODES.A + i)}</div>`
-      : `<div class="cell" contenteditable></div>`;
-  }
-  row += "</div></div>";
-  return row;
-} */
-
-function createRow(rowInfo, content) {
+function createRow(row, content) {
+  const resize =
+    row !== null ? '<div class="row-resize" data-resize="row"></div>' : '';
   return `
-    <div class="row">
-      <div class="row-info">${rowInfo}</div>
-      <div class="row-data">${content}</div>
+    <div class="row" data-row=${row} data-type="resizable">
+      <div class="row-info">
+        ${row !== null ? row + 1 : ''}
+        ${resize}
+      </div>
+      <div class="row-data">
+        ${content}
+      </div>
     </div>
     `;
 }
@@ -34,11 +26,30 @@ function getColTitle(_, index) {
   return String.fromCharCode(CODES.A + index);
 }
 
-function createColumn(title) {
-  return `<div class="column">${title}</div>`;
+function createColumn(title, index) {
+  return `
+  <div class="column" data-type="resizable" data-col=${index}>
+    ${title}
+    <div class="col-resize" data-resize="column"></div>
+  </div>
+  `;
 }
-function createCell() {
-  return `<div class="cell" contenteditable></div>`;
+function createCell(col, row) {
+  return `
+    <div
+      class="cell"
+      contenteditable
+      data-col=${col}
+      data-row=${row}
+    >
+    </div>`;
+}
+
+function createIndicators() {
+  return `
+    <div class="indicator-col"></div>
+    <div class="indicator-row"></div>
+  `;
 }
 
 export function createTable(rowsCount = 15) {
@@ -48,13 +59,14 @@ export function createTable(rowsCount = 15) {
     .map(getColTitle)
     .map(createColumn)
     .join('');
-  rows.push(createRow('', columns));
+  rows.push(createRow(null, columns));
   for (let i = 0; i < rowsCount; i++) {
     const cells = new Array(CODES.colsCount)
       .fill('')
-      .map(createCell)
+      .map((_, col) => createCell(col, i))
       .join('');
-    rows.push(createRow(i + 1, cells));
+    rows.push(createRow(i, cells));
   }
+  rows.push(createIndicators());
   return rows.join('');
 }

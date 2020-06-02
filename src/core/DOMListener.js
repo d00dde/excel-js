@@ -13,7 +13,7 @@ export class DOMListener {
       const method = createMethodName(listener);
       if (!this[method]) {
         throw new Error(
-          `Method ${method} not implemented in ${this.name} Component`
+          `Method ${method} not implemented in ${this.name} Component`,
         );
       }
       this[method] = this[method].bind(this);
@@ -26,6 +26,15 @@ export class DOMListener {
       this.$root.off(listener, this[method]);
     });
   }
+/*  addListener(type) {
+    const method = createMethodName(type);
+    this[method] = this[method].bind(this);
+    this.$root.on(type, this[method]);
+  }
+  removeListener(type) {
+    const method = createMethodName(type);
+    this.$root.off(type, this[method]);
+  } */
 }
 
 function createMethodName(eventName) {
