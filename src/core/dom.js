@@ -48,6 +48,16 @@ class Dom {
   get data() {
     return this.$el.dataset;
   }
+  id(delim = null) {
+    if(delim) {
+      const parsed = this.id().split(delim);
+      return {
+        row: +parsed[0],
+        col: +parsed[1],
+      }
+    }
+    return this.data.id;
+  }
   css(styles = {}) {
     Object.keys(styles).forEach((key) => {
       this.$el.style[key] = styles[key];
@@ -60,6 +70,10 @@ class Dom {
   }
   removeClass(className) {
     this.$el.classList.remove(className);
+    return this;
+  }
+  focus() {
+    this.$el.focus();
     return this;
   }
 }
