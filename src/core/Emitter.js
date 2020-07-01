@@ -3,6 +3,7 @@ export class Emitter {
 		this.listeners = {};
 	}
 	emit(eventName, ...args) {
+		//console.log('emit ', eventName)
 		if(!Array.isArray(this.listeners[eventName])){
 			return false;
 		}
