@@ -19,8 +19,7 @@ export class Table extends ExcelComponent {
   }
   init() {
     super.init();
-    const $cell = this.$root.find('[data-id="0:0"]');
-    this.selection.select($cell);
+    this.selectCell(this.$root.find('[data-id="0:0"]'));
     this.$on('Formula: input', (value) => {
       this.selection.current.text(value);
     });
@@ -31,18 +30,21 @@ export class Table extends ExcelComponent {
   toHTML() {
     return createTable(20);
   }
+  selectCell($cell) {
+    this.selection.select($cell);
+    this.$emit('Table: select', $cell);
+  }
   onMousedown(event) {
     if (shouldResize(event)) {
       resizeHandler(event, this.$root);
     } else if (isCell(event.target)) {
       const $target = $(event.target);
+      this.$emit('Table: select', $target);
       if(event.shiftKey){
         const target = $target.id(':');
         const current = this.selection.current.id(':');
-        
         const $cells = matrix(target, current)
             .map((id) => this.$root.find(`[data-id="${id}"]`));
-        
         this.selection.selectGroup($cells);
       }
       else {
@@ -64,8 +66,7 @@ export class Table extends ExcelComponent {
       event.preventDefault();
       const current = this.selection.current.id(':');
       const $next = this.$root.find(nextSelector(key, current));
-      this.selection.select($next);
-      this.$emit('Table: select', $next);
+      this.selectCell($next);
     }
   }
   onInput(event) {

@@ -4,7 +4,6 @@ export class Toolbar extends ExcelComponent {
   constructor($root, options) {
     super($root, {
       name: 'Toolbar',
-      listeners: ['click'],
       ...options,
     });
   }
@@ -44,7 +43,5 @@ format_align_right
 </span>
 </div>`;
   }
-  onClick(e) {
-    console.log('button: ', e.target);
-  }
+
 }
