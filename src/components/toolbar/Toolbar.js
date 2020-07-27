@@ -43,5 +43,4 @@ format_align_right
 </span>
 </div>`;
   }
-
 }

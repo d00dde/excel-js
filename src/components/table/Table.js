@@ -20,7 +20,6 @@ export class Table extends ExcelComponent {
   }
   init() {
     super.init();
-    console.log(this.$root);
     this.selectCell(this.$root.find('[data-id="0:0"]'));
     this.$on('Formula: input', (value) => {
       this.selection.current.text(value);
@@ -30,7 +29,8 @@ export class Table extends ExcelComponent {
     });
   }
   toHTML() {
-    return createTable(20);
+    const state = this.store.getState();
+    return createTable(20, state);
   }
   selectCell($cell) {
     this.selection.select($cell);
@@ -51,14 +51,14 @@ export class Table extends ExcelComponent {
       this.resizeTable(event);
     } else if (isCell(event.target)) {
       const $target = $(event.target);
-      if(event.shiftKey){
+      if (event.shiftKey) {
         const target = $target.id(':');
         const current = this.selection.current.id(':');
-        const $cells = matrix(target, current)
-            .map((id) => this.$root.find(`[data-id="${id}"]`));
+        const $cells = matrix(target, current).map((id) =>
+          this.$root.find(`[data-id="${id}"]`),
+        );
         this.selection.selectGroup($cells);
-      }
-      else {
+      } else {
         this.selectCell($target);
       }
     }
@@ -73,7 +73,7 @@ export class Table extends ExcelComponent {
       'ArrowDown',
     ];
     const { key } = event;
-    if(keys.includes(key) && !event.shiftKey) {
+    if (keys.includes(key) && !event.shiftKey) {
       event.preventDefault();
       const current = this.selection.current.id(':');
       const $next = this.$root.find(nextSelector(key, current));
@@ -84,4 +84,3 @@ export class Table extends ExcelComponent {
     this.$emit('Table: input', $(event.target).text());
   }
 }
-

@@ -12,10 +12,10 @@ export class ExcelComponent extends DOMListener {
   toHTML() {
     return '';
   }
-  $emit (eventName, ...args) {
+  $emit(eventName, ...args) {
     this.emitter.emit(eventName, ...args);
   }
-  $on (eventName, fn) {
+  $on(eventName, fn) {
     this.unsubs.push(this.emitter.subscribe(eventName, fn));
   }
   init() {
