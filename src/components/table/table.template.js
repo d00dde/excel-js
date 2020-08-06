@@ -6,12 +6,18 @@ const CODES = {
   },
 };
 const DEFAULT_WIDTH = 120;
+const DEFAULT_HEIGHT = 20;
 
-function createRow(row, content) {
+function createRow(row, content, state = {}) {
   const resize =
     row !== null ? '<div class="row-resize" data-resize="row"></div>' : '';
   return `
-    <div class="row" data-row=${row} data-type="resizable">
+    <div 
+      class="row" 
+      data-row=${row} 
+      data-type="resizable"
+      style="height: ${calcHeight(state.rowState, row)}"
+    >
       <div class="row-info">
         ${row !== null ? row + 1 : ''}
         ${resize}
@@ -62,8 +68,13 @@ function createIndicators() {
     <div class="indicator-row"></div>
   `;
 }
+
 function calcWidth(state, index) {
   return (state[index] || DEFAULT_WIDTH) + 'px';
+}
+
+function calcHeight(state, index) {
+  return (state[index] || DEFAULT_HEIGHT) + 'px';
 }
 
 function withWidthFrom(state) {
@@ -84,13 +95,13 @@ export function createTable(rowsCount = 15, state = {}) {
     .map(withWidthFrom(state))
     .map(createColumn)
     .join('');
-  rows.push(createRow(null, columns));
+  rows.push(createRow(null, columns, state));
   for (let row = 0; row < rowsCount; row++) {
     const cells = new Array(CODES.colsCount)
       .fill('')
       .map(createCell(state, row))
       .join('');
-    rows.push(createRow(row, cells));
+    rows.push(createRow(row, cells, state));
   }
   rows.push(createIndicators());
   return rows.join('');

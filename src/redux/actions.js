@@ -6,3 +6,10 @@ export const tableResize = (data) => {
     payload: data,
   };
 };
+
+export const changeText = (text) => {
+  return {
+    type: types.TABLE_RESIZE,
+    payload: text,
+  };
+};
