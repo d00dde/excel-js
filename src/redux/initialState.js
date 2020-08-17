@@ -4,7 +4,7 @@ const defaultState = {
   colState: {},
   rowState: {},
   dataState: {},
-  currentText: {},
+  currentText: '',
 };
 
 export const initialState = storage('excel-state')

@@ -7,9 +7,9 @@ export const tableResize = (data) => {
   };
 };
 
-export const changeText = (text) => {
+export const changeText = (value) => {
   return {
-    type: types.TABLE_RESIZE,
-    payload: text,
+    type: types.CHANGE_TEXT,
+    payload: value,
   };
 };

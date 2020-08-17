@@ -12,9 +12,9 @@ function createRow(row, content, state = {}) {
   const resize =
     row !== null ? '<div class="row-resize" data-resize="row"></div>' : '';
   return `
-    <div 
-      class="row" 
-      data-row=${row} 
+    <div
+      class="row"
+      data-row=${row}
       data-type="resizable"
       style="height: ${calcHeight(state.rowState, row)}"
     >
@@ -47,16 +47,19 @@ function createColumn({ title, index, width }) {
   `;
 }
 function createCell(state, row) {
-  return function(_, col) {
+  return (_, col) => {
+    const id = `${row}:${col}`;
+    const content = state.dataState[id] || '';
     return `
       <div
         class="cell"
         contenteditable
         data-col=${col}
         data-type="cell"
-        data-id="${row}:${col}"
+        data-id=${id}
         style="width: ${calcWidth(state.colState, col)}"
       >
+        ${content}
       </div>
     `;
   };

@@ -8,6 +8,10 @@ export class Header extends ExcelComponent {
       ...options,
     });
   }
+  init() {
+    super.init();
+    // this.$title = this.$root.find('#formula');
+  }
 
   toHTML() {
     return `

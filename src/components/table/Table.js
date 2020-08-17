@@ -4,7 +4,7 @@ import { resizeHandler } from './table.resize';
 import { shouldResize, isCell, matrix, nextSelector } from './table.functions';
 import { TableSelection } from './TableSelection';
 import { $ } from '@core/dom';
-import { tableResize } from '@/redux/actions';
+import { tableResize, changeText } from '@/redux/actions';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -22,6 +22,7 @@ export class Table extends ExcelComponent {
     super.init();
     this.selectCell(this.$root.find('[data-id="0:0"]'));
     this.$on('Formula: input', (value) => {
+      this.updateTextInStore(value);
       this.selection.current.text(value);
     });
     this.$on('Formula: done', () => {
@@ -55,7 +56,7 @@ export class Table extends ExcelComponent {
         const target = $target.id(':');
         const current = this.selection.current.id(':');
         const $cells = matrix(target, current).map((id) =>
-          this.$root.find(`[data-id="${id}"]`),
+          this.$root.find(`[data-id="${id}"]`)
         );
         this.selection.selectGroup($cells);
       } else {
@@ -81,6 +82,15 @@ export class Table extends ExcelComponent {
     }
   }
   onInput(event) {
-    this.$emit('Table: input', $(event.target).text());
+    // this.$emit('Table: input', $(event.target).text());
+    this.updateTextInStore($(event.target).text());
+  }
+  updateTextInStore(value) {
+    this.$dispatch(
+      changeText({
+        id: this.selection.current.id(),
+        value,
+      })
+    );
   }
 }
