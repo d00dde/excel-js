@@ -4,7 +4,13 @@ import { resizeHandler } from './table.resize';
 import { shouldResize, isCell, matrix, nextSelector } from './table.functions';
 import { TableSelection } from './TableSelection';
 import { $ } from '@core/dom';
-import { tableResize, changeText } from '@/redux/actions';
+import {
+  tableResize,
+  changeText,
+  changeStyles,
+  applyStyle,
+} from '@/redux/actions';
+import { defaultStyles } from '@/constants';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -28,6 +34,15 @@ export class Table extends ExcelComponent {
     this.$on('Formula: done', () => {
       this.selection.current.focus();
     });
+    this.$on('Toolbar: applyStyle', (style) => {
+      this.selection.applyStyle(style);
+      this.$dispatch(
+        applyStyle({
+          value: style,
+          ids: this.selection.selectedIds,
+        })
+      );
+    });
   }
   toHTML() {
     const state = this.store.getState();
@@ -36,6 +51,8 @@ export class Table extends ExcelComponent {
   selectCell($cell) {
     this.selection.select($cell);
     this.$emit('Table: select', $cell);
+    const styles = $cell.getStyles(Object.keys(defaultStyles));
+    this.$dispatch(changeStyles(styles));
   }
 
   async resizeTable(event) {

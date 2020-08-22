@@ -1,3 +1,5 @@
+import { defaultStyles } from '@/constants';
+import { toInlineStyles } from '@core/utils';
 const CODES = {
   A: 65,
   Z: 90,
@@ -7,6 +9,8 @@ const CODES = {
 };
 const DEFAULT_WIDTH = 120;
 const DEFAULT_HEIGHT = 20;
+
+const defaultCellStyles = toInlineStyles(defaultStyles);
 
 function createRow(row, content, state = {}) {
   const resize =
@@ -50,6 +54,7 @@ function createCell(state, row) {
   return (_, col) => {
     const id = `${row}:${col}`;
     const content = state.dataState[id] || '';
+    const styles = computedStyles(state, id);
     return `
       <div
         class="cell"
@@ -57,7 +62,7 @@ function createCell(state, row) {
         data-col=${col}
         data-type="cell"
         data-id=${id}
-        style="width: ${calcWidth(state.colState, col)}"
+        style="${styles} width: ${calcWidth(state.colState, col)}"
       >
         ${content}
       </div>
@@ -88,6 +93,9 @@ function withWidthFrom(state) {
       width: calcWidth(state.colState, index),
     };
   };
+}
+function computedStyles(state, id) {
+  return state.stylesState[id] ? state.stylesState[id] : defaultCellStyles;
 }
 
 export function createTable(rowsCount = 15, state = {}) {

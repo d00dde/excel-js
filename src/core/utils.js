@@ -22,3 +22,13 @@ export function isEqual(a, b) {
   }
   return a === b;
 }
+export function camelToKebab(camelCase) {
+  return camelCase.replace(/[A-Z]/g, (match) => {
+    return `-${match.toLowerCase()}`;
+  });
+}
+export function toInlineStyles(styles = {}) {
+  return Object.keys(styles).reduce((result, style) => {
+    return result + `${camelToKebab(style)}: ${styles[style]}; `;
+  }, '');
+}

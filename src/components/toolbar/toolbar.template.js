@@ -40,18 +40,18 @@ export function createToolbar(state) {
     },
     {
       icon: 'format_align_left',
-      active: state.textAlign === 'left',
-      value: { textAlign: 'left' },
+      active: state.justifyContent === 'left',
+      value: { justifyContent: 'left' },
     },
     {
       icon: 'format_align_center',
-      active: state.textAlign === 'center',
-      value: { textAlign: 'center' },
+      active: state.justifyContent === 'center',
+      value: { justifyContent: 'center' },
     },
     {
       icon: 'format_align_right',
-      active: state.textAlign === 'right',
-      value: { textAlign: 'right' },
+      active: state.justifyContent === 'right',
+      value: { justifyContent: 'right' },
     },
   ];
   return buttons.map(createButton).join('');
