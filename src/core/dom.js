@@ -13,11 +13,11 @@ class Dom {
     return this.$el.outerHTML.trim();
   }
   text(text) {
-    if(typeof text === 'string') {
+    if (typeof text === 'string') {
       this.$el.textContent = text;
       return this;
     }
-    if(this.$el.tagName.toLowerCase() === 'input'){
+    if (this.$el.tagName.toLowerCase() === 'input') {
       return this.$el.value.trim();
     }
     return this.$el.textContent.trim();
@@ -59,12 +59,12 @@ class Dom {
     return this.$el.dataset;
   }
   id(delim = null) {
-    if(delim) {
+    if (delim) {
       const parsed = this.id().split(delim);
       return {
         row: +parsed[0],
         col: +parsed[1],
-      }
+      };
     }
     return this.data.id;
   }
@@ -73,6 +73,12 @@ class Dom {
       this.$el.style[key] = styles[key];
     });
     return this;
+  }
+  getStyles(styles = []) {
+    return styles.reduce((res, style) => {
+      res[style] = this.$el.style[style];
+      return res;
+    }, {});
   }
   addClass(className) {
     this.$el.classList.add(className);
@@ -85,6 +91,13 @@ class Dom {
   focus() {
     this.$el.focus();
     return this;
+  }
+  attr(name, value) {
+    if (!(value === undefined)) {
+      this.$el.setAttribute(name, value);
+      return this;
+    }
+    return this.$el.getAttribute(name);
   }
 }
 
