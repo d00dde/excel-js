@@ -1,5 +1,7 @@
 import { defaultStyles } from '@/constants';
 import { toInlineStyles } from '@core/utils';
+import { parse } from '@core/parse';
+
 const CODES = {
   A: 65,
   Z: 90,
@@ -62,9 +64,10 @@ function createCell(state, row) {
         data-col=${col}
         data-type="cell"
         data-id=${id}
+        data-value="${content}"
         style="${styles} width: ${calcWidth(state.colState, col)}"
       >
-        ${content}
+        ${parse(content)}
       </div>
     `;
   };
@@ -95,7 +98,9 @@ function withWidthFrom(state) {
   };
 }
 function computedStyles(state, id) {
-  return state.stylesState[id] ? state.stylesState[id] : defaultCellStyles;
+  return state.stylesState[id]
+    ? toInlineStyles(state.stylesState[id])
+    : defaultCellStyles;
 }
 
 export function createTable(rowsCount = 15, state = {}) {

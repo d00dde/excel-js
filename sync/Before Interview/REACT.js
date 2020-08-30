@@ -36,8 +36,14 @@ useLayoutEffect: useLayoutEffect(() => {}, []); // аналог useEffect, но 
 useDebugValue: useDebugValue(value); // может использоваться для отображения метки для пользовательских хуков в React DevTools.
 
 Хуки react-router-dom
-useHistory
-useLocation
+useHistory:
+useLocation:
+
+Хуки redux
+useDispatch:
+useSelector:
+
+
 
 
 

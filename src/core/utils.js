@@ -32,3 +32,14 @@ export function toInlineStyles(styles = {}) {
     return result + `${camelToKebab(style)}: ${styles[style]}; `;
   }, '');
 }
+export function debounce(fn, delay) {
+  let timeout;
+  return (...args) => {
+    const later = () => {
+      clearTimeout(timeout);
+      fn(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, delay);
+  };
+}

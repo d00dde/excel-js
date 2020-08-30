@@ -92,6 +92,13 @@ class Dom {
     this.$el.focus();
     return this;
   }
+  attr(name, value) {
+    if (!(value === undefined)) {
+      this.$el.setAttribute(name, value);
+      return this;
+    }
+    return this.$el.getAttribute(name);
+  }
 }
 
 export function $(selector) {

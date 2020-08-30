@@ -4,6 +4,7 @@ import { resizeHandler } from './table.resize';
 import { shouldResize, isCell, matrix, nextSelector } from './table.functions';
 import { TableSelection } from './TableSelection';
 import { $ } from '@core/dom';
+import { parse } from '@core/parse';
 import {
   tableResize,
   changeText,
@@ -28,8 +29,8 @@ export class Table extends ExcelComponent {
     super.init();
     this.selectCell(this.$root.find('[data-id="0:0"]'));
     this.$on('Formula: input', (value) => {
+      this.selection.current.attr('data-value', value).text(parse(value));
       this.updateTextInStore(value);
-      this.selection.current.text(value);
     });
     this.$on('Formula: done', () => {
       this.selection.current.focus();
@@ -40,7 +41,7 @@ export class Table extends ExcelComponent {
         applyStyle({
           value: style,
           ids: this.selection.selectedIds,
-        })
+        }),
       );
     });
   }
@@ -73,7 +74,7 @@ export class Table extends ExcelComponent {
         const target = $target.id(':');
         const current = this.selection.current.id(':');
         const $cells = matrix(target, current).map((id) =>
-          this.$root.find(`[data-id="${id}"]`)
+          this.$root.find(`[data-id="${id}"]`),
         );
         this.selection.selectGroup($cells);
       } else {
@@ -107,7 +108,7 @@ export class Table extends ExcelComponent {
       changeText({
         id: this.selection.current.id(),
         value,
-      })
+      }),
     );
   }
 }
