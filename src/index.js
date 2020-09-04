@@ -8,8 +8,12 @@ import { createStore } from '@core/createStore';
 import { rootReducer } from '@/redux/rootReducer';
 import { storage, debounce } from '@core/utils';
 import { initialState } from '@/redux/initialState';
+import { Router } from '@core/routes/Router';
 
 const store = createStore(rootReducer, initialState);
+const router = new Router('#app', {});
+
+console.log(router);
 
 const stateListener = debounce((store) => {
   storage('excel-state', store);
