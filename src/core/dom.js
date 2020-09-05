@@ -99,6 +99,9 @@ class Dom {
     }
     return this.$el.getAttribute(name);
   }
+  get isEmpty() {
+    return !this.$el;
+  }
 }
 
 export function $(selector) {
