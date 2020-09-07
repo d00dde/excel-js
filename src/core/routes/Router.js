@@ -1,5 +1,5 @@
 import { $ } from '@core/dom';
-import { ActiveRoute } from './ActiveRoute';
+// import { ActiveRoute } from './ActiveRoute';
 export class Router {
   constructor(selector, routes) {
     this.$placeholder = $(selector);
@@ -15,7 +15,9 @@ export class Router {
     this.changePageHandler();
   }
   changePageHandler() {
-    this.$placeholder.html(ActiveRoute.param);
+    const Page = this.routes.excel;
+    const page = new Page();
+    this.$placeholder.append(page.getRoot());
   }
   destroy() {
     window.removeEventListener('hashchange', this.changePageHandler);
