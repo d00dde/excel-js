@@ -6,13 +6,14 @@ export class DashboardPage extends Page {
     super(params);
   }
   getRoot() {
+    const id = Date.now().toString();
     return $.create('div', 'db').html(`
       <div class="db__header">
         <h1>Exel-like application JS</h1>
       </div>
       <div class="db__new">
         <div class="db__view">
-          <a href="#" class="db__create">
+          <a href="#excel/${id}" class="db__create">
             Новая <br/> таблица
           </a>
         </div>
