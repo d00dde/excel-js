@@ -1,5 +1,6 @@
 import { ExcelComponent } from '@core/ExcelComponent';
 import { changeTitle } from '@/redux/actions';
+import { ActiveRoute } from '@core/routes/ActiveRoute';
 import { $ } from '@core/dom';
 
 export class Header extends ExcelComponent {
@@ -7,7 +8,7 @@ export class Header extends ExcelComponent {
   constructor($root, options) {
     super($root, {
       name: 'Header',
-      listeners: ['input'],
+      listeners: ['input', 'click'],
       ...options,
     });
   }
@@ -15,9 +16,27 @@ export class Header extends ExcelComponent {
     const $target = $(e.target);
     this.$dispatch(changeTitle($target.text()));
   }
+  onClick(e) {
+    const $target = $(e.target);
+    switch ($target.data.button) {
+      case 'delete':
+        if (confirm('Вы действительно хотите удалить таблицу?')) {
+          localStorage.removeItem('excel:' + ActiveRoute.param);
+          ActiveRoute.navigate('');
+        }
+        break;
+      case 'exit':
+        ActiveRoute.navigate('');
+        break;
+    }
+  }
 
   toHTML() {
     const state = this.store.getState();
+    const buttons = [
+      { value: 'delete', icon: 'delete_forever' },
+      { value: 'exit', icon: 'exit_to_app' },
+    ];
     return `
       <input
         type="text"
@@ -26,17 +45,17 @@ export class Header extends ExcelComponent {
         value="${state.title}"
       />
       <div class="table-controls">
-      <div class="button">
-      <span class="material-icons">
-      delete_forever
-      </span>
-      </div>
-      <div class="button">
-      <span class="material-icons">
-      exit_to_app
-      </span>
-      </div>
-      </div>
+      ${buttons.map(this.createButton).join('')}
       `;
+  }
+  createButton({ value, icon }) {
+    const meta = `data-button="${value}"`;
+    return `
+      <div class="button" ${meta}>
+        <span class="material-icons" ${meta}>
+          ${icon}
+        </span>
+      </div>
+    `;
   }
 }

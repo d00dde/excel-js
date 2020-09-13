@@ -7,16 +7,22 @@ import { Table } from '@/components/table/Table';
 import { createStore } from '@core/createStore';
 import { rootReducer } from '@/redux/rootReducer';
 import { storage, debounce } from '@core/utils';
-import { initialState } from '@/redux/initialState';
+import { normalizeInitialState } from '@/redux/initialState';
+
+function storageName(param) {
+  return 'excel:' + param;
+}
 
 export class ExcelPage extends Page {
   constructor(params) {
     super(params);
   }
   getRoot() {
-    const store = createStore(rootReducer, initialState);
+    const param = this.params || Date.now().toString();
+    const state = storage(storageName(param));
+    const store = createStore(rootReducer, normalizeInitialState(state));
     const stateListener = debounce((store) => {
-      storage('excel-state', store);
+      storage(storageName(param), store);
     }, 300);
 
     store.subscribe(stateListener);

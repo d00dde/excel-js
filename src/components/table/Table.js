@@ -100,7 +100,6 @@ export class Table extends ExcelComponent {
     }
   }
   onInput(event) {
-    // this.$emit('Table: input', $(event.target).text());
     this.updateTextInStore($(event.target).text());
   }
   updateTextInStore(value) {

@@ -1,5 +1,6 @@
 import { Page } from '@core/Page';
 import { $ } from '@core/dom';
+import { createTablesList } from './dashboard.functions';
 
 export class DashboardPage extends Page {
   constructor(params) {
@@ -19,16 +20,7 @@ export class DashboardPage extends Page {
         </div>
       </div>
       <div class="db__table db__view">
-        <div class="db__list-header">
-          <span>Название таблицы</span>
-          <span>Дата открытия</span>
-        </div>
-        <ul class="db__list">
-          <li class="db__record">
-            <a href="#">Table 1</a>
-            <strong>18/06/2020</strong>
-          </li>
-        </ul>
+        ${createTablesList()}
       </div>
     `);
   }
