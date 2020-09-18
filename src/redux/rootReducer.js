@@ -28,7 +28,6 @@ export function rootReducer(state, action) {
       action.payload.ids.forEach((id) => {
         val[id] = { ...val[id], ...action.payload.value };
       });
-      console.log(val);
       return {
         ...state,
         [field]: val,
@@ -38,6 +37,11 @@ export function rootReducer(state, action) {
       return {
         ...state,
         title: action.payload,
+      };
+    case types.UPDATE_DATE:
+      return {
+        ...state,
+        openedDate: new Date().toJSON(),
       };
     default:
       return state;
