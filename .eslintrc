@@ -4,7 +4,10 @@
     "es6": true,
     "browser": true,
     "node": true
+    // "jest": true,
+    // "jest/globals": true
   },
+  "plugins": ["jest"],
   "rules": {
     "linebreak-style": "off",
     "object-curly-spacing": "off",
