@@ -9,6 +9,8 @@ import { rootReducer } from '@/redux/rootReducer';
 import { storage, debounce } from '@core/utils';
 import { normalizeInitialState } from '@/redux/initialState';
 
+class StateProcessor {}
+
 function storageName(param) {
   return 'excel:' + param;
 }
@@ -16,6 +18,8 @@ function storageName(param) {
 export class ExcelPage extends Page {
   constructor(params) {
     super(params);
+    this.storeSub = null;
+    this.processor = new StateProcessor();
   }
   getRoot() {
     const param = this.params || Date.now().toString();
@@ -25,7 +29,7 @@ export class ExcelPage extends Page {
       storage(storageName(param), store);
     }, 300);
 
-    store.subscribe(stateListener);
+    this.storeSub = store.subscribe(stateListener);
 
     this.excel = new Excel({
       components: [Header, Toolbar, Formula, Table],
@@ -38,6 +42,7 @@ export class ExcelPage extends Page {
     this.excel.init();
   }
   destroy() {
+    this.storeSub.unsubscribe();
     this.excel.destroy();
   }
 }
