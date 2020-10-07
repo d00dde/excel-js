@@ -10,6 +10,7 @@
 @import 'formula';
 @import 'table';
 @import 'dashboard';
+@import 'loader';
 
 * {
   padding: 0;
@@ -25,5 +26,5 @@ body {
   color: #888;
   height: 100%;
   max-width: 100%;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
